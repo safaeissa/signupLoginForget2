@@ -4,12 +4,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +26,8 @@ public class ForgetPasswordFragment extends Fragment {
     private EditText etF;
     private Button btnR;
     private FirebaseServices fbs;
+    private TextView signupf;
+    private TextView LoginF;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -79,6 +83,24 @@ public class ForgetPasswordFragment extends Fragment {
         fbs = FirebaseServices.getInstance();
         etF = getView().findViewById(R.id.etForget);
         btnR = getView().findViewById(R.id.btnRe);
+        LoginF=getView().findViewById(R.id.etloginFF);
+        signupf=getView().findViewById(R.id.etloginFF);
+        LoginF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction= getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.main ,new LoginFragment());
+                transaction.commit();
+            }
+        });
+        signupf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction= getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.main ,new SignUpFragment());
+                transaction.commit();
+            }
+        });
         btnR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

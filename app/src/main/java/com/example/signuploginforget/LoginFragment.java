@@ -28,6 +28,8 @@ public class LoginFragment extends Fragment {
     private TextView textView4;
     private Button btnlogin;
     private FirebaseServices fbs;
+    private TextView signup;
+    private TextView forget;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,6 +88,24 @@ public class LoginFragment extends Fragment {
         etUsername=getView().findViewById(R.id.etEmailLogin);
         etPassword=getView().findViewById(R.id.etpasswordLogin);
         btnlogin=getView().findViewById(R.id.btnlogin);
+        signup=getView().findViewById(R.id.etSignupFL);
+        forget=getView().findViewById(R.id.etForgetFL);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction= getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.main ,new SignUpFragment());
+                transaction.commit();
+            }
+        });
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction= getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.main ,new ForgetPasswordFragment());
+                transaction.commit();
+            }
+        });
         btnlogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //Data validation
@@ -101,6 +121,9 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(getActivity(), "Successfully signed up!", Toast.LENGTH_SHORT).show();
+                        FragmentTransaction transaction= getParentFragmentManager().beginTransaction();
+                        transaction.replace(R.id.main ,new AddDataFragment());
+                        transaction.commit();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

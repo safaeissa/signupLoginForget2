@@ -4,17 +4,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
+import androidx.fragment.app.FragmentTransaction;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +28,8 @@ public class SignUpFragment extends Fragment {
     private EditText etPassword;
     private Button btnSignUp;
     private FirebaseServices fbs;
+    private TextView Login ;
+    private TextView Forgets;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -82,6 +86,24 @@ public class SignUpFragment extends Fragment {
         etUsername=getView().findViewById(R.id.etEmail);
         etPassword=getView().findViewById(R.id.etPassword);
         btnSignUp=getView().findViewById(R.id.btnSignUp);
+        Login=getView().findViewById(R.id.etLoginFS);
+        Forgets=getView().findViewById(R.id.etForgetFS);
+        Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction= getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.main ,new LoginFragment());
+                transaction.commit();
+            }
+        });
+        Forgets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction= getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.main ,new ForgetPasswordFragment());
+                transaction.commit();
+            }
+        });
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +120,9 @@ public class SignUpFragment extends Fragment {
                     @Override
                     public void onSuccess (AuthResult authResult){
                         Toast.makeText(getActivity(), "Successfully signed up!", Toast.LENGTH_SHORT).show();
+                        FragmentTransaction transaction= getParentFragmentManager().beginTransaction();
+                        transaction.replace(R.id.main ,new AddDataFragment());
+                        transaction.commit();
                     }
 
                 }).addOnFailureListener(new OnFailureListener() {

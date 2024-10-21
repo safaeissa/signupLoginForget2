@@ -2,11 +2,21 @@ package com.example.signuploginforget;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,10 +24,12 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class AddDataFragment extends Fragment {
-    private String name ;
-    private String location ;
-    private String phone ;
-    private String specialty;
+    private EditText name ;
+    private EditText location ;
+    private EditText id ;
+    private EditText specialty;
+    private Button add1;
+    private FirebaseServices fbs;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,8 +81,49 @@ public class AddDataFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        connect();
     }
    public void connect()
     {
+       name=getView().findViewById(R.id.edName);
+       fbs=FirebaseServices.getInstance();
+        location=getView().findViewById(R.id.etLocation);
+        id=getView().findViewById(R.id.etid);
+        specialty=getView().findViewById(R.id.etSpecialty);
+        add1=getView().findViewById(R.id.btnAdd);
+
+
+
+    }
+    public  void adddoctor() {
+        String name1, id1, location1, specialty1;
+        name1 = name.getText().toString();
+        id1 = id.getText().toString();
+        location1 = location.getText().toString();
+        specialty1 = specialty.getText().toString();
+        if (name1.isEmpty() || id1.isEmpty() || location1.isEmpty() || specialty1.isEmpty()) {
+            Toast.makeText(getActivity(), "something is wrong", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Doctor doctor = new Doctor(id1, name1, location1, specialty1);
+
+        fbs.getFire().collection("doctors").add(doctor).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(getActivity(), "success to add", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "something is wrong", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
     }
 }
+
+
+
+
+

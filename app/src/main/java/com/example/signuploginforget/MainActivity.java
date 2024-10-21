@@ -11,7 +11,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
-private TextView etForget,etSignUp,etLogin;
+    private TextView etForget, etSignUp, etLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,28 +28,13 @@ private TextView etForget,etSignUp,etLogin;
     @Override
     protected void onStart() {
         super.onStart();
-        connect();
         gotoLogin();
     }
-    public void connect()
-    {
-        etForget=findViewById(R.id.etForget);
-        etSignUp=findViewById(R.id.etSignUp);
-        etLogin=findViewById(R.id.etLogin);
-        etForget.setOnClickListener(view -> gotoForget());
-        etSignUp.setOnClickListener(view -> gotoSignUp());
-        etLogin.setOnClickListener(view -> gotoLogin());
+
+    private void gotoLogin() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.main, new LoginFragment());
+        ft.commit();
     }
-    private void gotoLogin(){
-        FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main,new LoginFragment());
-        ft.commit();}
-    private void gotoSignUp(){
-        FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main,new SignUpFragment());
-        ft.commit();}
-    private void gotoForget(){
-        FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main,new ForgetPasswordFragment());
-        ft.commit();}
+
 }
