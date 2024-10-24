@@ -121,7 +121,7 @@ public class SignUpFragment extends Fragment {
                     public void onSuccess (AuthResult authResult){
                         Toast.makeText(getActivity(), "Successfully signed up!", Toast.LENGTH_SHORT).show();
                         FragmentTransaction transaction= getParentFragmentManager().beginTransaction();
-                        transaction.replace(R.id.main ,new AddDataFragment());
+                        transaction.replace(R.id.main ,new SafaFragment());
                         transaction.commit();
                     }
 

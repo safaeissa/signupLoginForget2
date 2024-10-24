@@ -91,9 +91,12 @@ public class AddDataFragment extends Fragment {
         id=getView().findViewById(R.id.etid);
         specialty=getView().findViewById(R.id.etSpecialty);
         add1=getView().findViewById(R.id.btnAdd);
-
-
-
+        add1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adddoctor();
+            }
+        });
     }
     public  void adddoctor() {
         String name1, id1, location1, specialty1;
